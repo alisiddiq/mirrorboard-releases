@@ -84,6 +84,9 @@
   .fine { color: var(--muted); font-size: 14px; }
 
   section { margin-top: 28px; }
+  .showcase { padding: 10px; margin-top: 0; }
+  .showcase video, .showcase img { display: block; width: 100%; height: auto; border-radius: 20px; }
+  .caption { text-align: center; color: var(--muted); font-size: 15px; margin: 14px 0 0; }
   .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
   .feature { padding: 24px; }
   .feature .symbol {
@@ -134,6 +137,14 @@
     </div>
   </header>
 
+  <section class="showcase glass">
+    <video id="demo" autoplay muted loop playsinline poster="demo-poster.jpg"
+           aria-label="Mirrorboard previewing an iPad, rearranging its home screen to match an iPhone, then mirroring it">
+      <source src="demo.mp4" type="video/mp4">
+    </video>
+  </section>
+  <p class="caption">Sam’s messy iPad, arranged like their iPhone in a few seconds.</p>
+
   <section class="features">
     <div class="feature glass">
       <div class="symbol" style="background: linear-gradient(135deg, #2fc6ff, #3d6bff)"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
@@ -163,6 +174,15 @@
     <div class="step glass"><h3>Connect your iPad</h3><p>Unlock it and tap Trust if it asks. The preview appears straight away.</p></div>
     <div class="step glass"><h3>Mirror</h3><p>Check the preview, click Mirror, and your iPad matches your iPhone.</p></div>
   </section>
+
+  <h2>See every change before it happens</h2>
+  <section class="showcase glass">
+    <picture>
+      <source srcset="screenshot-dark.jpg" media="(prefers-color-scheme: dark)">
+      <img src="screenshot-light.jpg" alt="Mirrorboard showing an iPad's home screen after mirroring, with a summary of what will change" loading="lazy">
+    </picture>
+  </section>
+  <p class="caption">Folders, widgets, apps missing on one device: it’s all in the summary, and Undo is one click.</p>
 
   <h2>Questions</h2>
   <section class="faq glass">
@@ -198,6 +218,13 @@
   </footer>
 </main>
 <script>
+  // people who prefer less motion get a still frame and the controls instead
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const video = document.getElementById("demo");
+    video.removeAttribute("autoplay");
+    video.pause();
+    video.controls = true;
+  }
   // The button turns on by itself once the first release is published.
   fetch("https://api.github.com/repos/alisiddiq/mirrorboard-releases/releases/latest")
     .then(r => r.ok ? r.json() : Promise.reject())
