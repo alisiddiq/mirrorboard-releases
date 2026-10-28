@@ -84,8 +84,8 @@
   .fine { color: var(--muted); font-size: 14px; }
 
   section { margin-top: 28px; }
-  .showcase { padding: 10px; margin-top: 0; }
-  .showcase video, .showcase img { display: block; width: 100%; height: auto; border-radius: 20px; }
+  .showcase { padding: clamp(6px, 1.1vw, 10px); margin-top: 0; }
+  .showcase video, .showcase img { display: block; width: 100%; height: auto; border-radius: clamp(8px, 2.2vw, 20px); }
   .caption { text-align: center; color: var(--muted); font-size: 15px; margin: 14px 0 0; }
   .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
   .feature { padding: 24px; }
