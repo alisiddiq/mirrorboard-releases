@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mirrorboard</title>
+<meta name="description" content="Give your iPad the same home screen as your iPhone: the same pages, folders and app order. Preview it first, then mirror in seconds.">
+<meta property="og:title" content="Mirrorboard">
+<meta property="og:description" content="Your iPhone's home screen, on your iPad.">
+<meta property="og:image" content="icon.png">
+<link rel="icon" href="favicon.png">
+<style>
+  :root {
+    --bg: #f5f5fa;
+    --text: #15151f;
+    --muted: #5d5d6e;
+    --card: rgba(255, 255, 255, 0.58);
+    --card-edge: rgba(255, 255, 255, 0.85);
+    --shadow: 0 18px 50px rgba(40, 40, 90, 0.10);
+    --blob-a: rgba(61, 224, 255, 0.45);
+    --blob-b: rgba(155, 92, 255, 0.40);
+    --blob-c: rgba(255, 95, 184, 0.30);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0b0b12;
+      --text: #f2f2f7;
+      --muted: #a3a3b5;
+      --card: rgba(255, 255, 255, 0.06);
+      --card-edge: rgba(255, 255, 255, 0.14);
+      --shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+      --blob-a: rgba(61, 224, 255, 0.22);
+      --blob-b: rgba(155, 92, 255, 0.26);
+      --blob-c: rgba(255, 95, 184, 0.16);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* soft colour behind everything, so the glass has something to catch */
+  .glow {
+    position: fixed; inset: -20vmax; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(40vmax 40vmax at 22% 18%, var(--blob-a), transparent 70%),
+      radial-gradient(42vmax 42vmax at 82% 30%, var(--blob-b), transparent 70%),
+      radial-gradient(38vmax 38vmax at 50% 92%, var(--blob-c), transparent 70%);
+    filter: blur(20px);
+  }
+  main { max-width: 980px; margin: 0 auto; padding: 0 16px 64px; }
+  .glass {
+    background: var(--card);
+    border: 1px solid var(--card-edge);
+    box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(28px) saturate(170%);
+    -webkit-backdrop-filter: blur(28px) saturate(170%);
+    border-radius: 28px;
+  }
+
+  header { text-align: center; padding: 88px 0 56px; }
+  .icon { width: 168px; height: 168px; filter: drop-shadow(0 22px 34px rgba(60, 60, 140, 0.22)); }
+  h1 {
+    font: 700 clamp(38px, 6.4vw, 64px)/1.06 -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    letter-spacing: -0.025em; margin: 28px auto 18px; max-width: 17ch;
+  }
+  .lede { color: var(--muted); font-size: clamp(18px, 2.2vw, 21px); max-width: 34em; margin: 0 auto; }
+  .cta { margin-top: 34px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .button {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 30px; border-radius: 999px; border: 0;
+    font: 600 18px -apple-system, BlinkMacSystemFont, sans-serif; color: #fff; text-decoration: none;
+    background: linear-gradient(135deg, #2fc6ff, #3d6bff 55%, #8b55ff);
+    box-shadow: 0 12px 30px rgba(61, 107, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .button:hover { transform: translateY(-1px); box-shadow: 0 16px 36px rgba(61, 107, 255, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.45); }
+  .button[aria-disabled="true"] { opacity: 0.55; pointer-events: none; }
+  .fine { color: var(--muted); font-size: 14px; }
+
+  section { margin-top: 28px; }
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .feature { padding: 24px; }
+  .feature .symbol {
+    width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+    color: #fff; margin-bottom: 14px;
+  }
+  .feature .symbol svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .feature h3 { margin: 0 0 6px; font-size: 18px; letter-spacing: -0.01em; }
+  .feature p { margin: 0; color: var(--muted); font-size: 15.5px; }
+
+  h2 { font-size: clamp(26px, 3.4vw, 34px); letter-spacing: -0.02em; text-align: center; margin: 72px 0 24px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; counter-reset: step; }
+  .step { padding: 24px 24px 26px; position: relative; }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #2fc6ff, #8b55ff); color: #fff; font-weight: 700; font-size: 15px; margin-bottom: 14px;
+  }
+  .step h3 { margin: 0 0 6px; font-size: 18px; }
+  .step p { margin: 0; color: var(--muted); font-size: 15.5px; }
+
+  .faq { padding: 8px 24px; }
+  details { border-bottom: 1px solid var(--card-edge); padding: 16px 0; }
+  details:last-child { border-bottom: 0; }
+  summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--muted); font-weight: 400; font-size: 22px; line-height: 1; }
+  details[open] summary::after { content: "–"; }
+  details p { color: var(--muted); margin: 10px 0 0; font-size: 15.5px; }
+
+  footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 64px; line-height: 1.7; }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<main>
+  <header>
+    <picture>
+      <source srcset="icon-dark.png" media="(prefers-color-scheme: dark)">
+      <img class="icon" src="icon.png" alt="Mirrorboard icon">
+    </picture>
+    <h1>Your iPhone’s home screen, on your iPad.</h1>
+    <p class="lede">Mirrorboard gives your iPad the same pages, folders and app order as your iPhone. See exactly what will change, then mirror it in seconds.</p>
+    <div class="cta">
+      <a class="button" id="download" href="#" aria-disabled="true">Coming soon</a>
+      <span class="fine" id="download-note">Free to try · $4.99 to mirror · macOS 26 or later</span>
+    </div>
+  </header>
+
+  <section class="features">
+    <div class="feature glass">
+      <div class="symbol" style="background: linear-gradient(135deg, #2fc6ff, #3d6bff)"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <h3>See it first</h3>
+      <p>A live preview shows your iPad before and after, with real app icons. Nothing changes until you click Mirror.</p>
+    </div>
+    <div class="feature glass">
+      <div class="symbol" style="background: linear-gradient(135deg, #34d399, #10b981)"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></div>
+      <h3>Undo anytime</h3>
+      <p>Your iPad’s layout is backed up before every change. One click puts it back exactly how it was.</p>
+    </div>
+    <div class="feature glass">
+      <div class="symbol" style="background: linear-gradient(135deg, #9b5cff, #ff5fb8)"><svg viewBox="0 0 24 24"><path d="M2 8.8a15 15 0 0 1 20 0"/><path d="M5.5 12.4a10 10 0 0 1 13 0"/><path d="M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="19.5" r="0.8"/></svg></div>
+      <h3>Cable or Wi‑Fi</h3>
+      <p>Plug in once. After that, your iPad can connect over Wi‑Fi, and your iPhone’s layout is remembered.</p>
+    </div>
+    <div class="feature glass">
+      <div class="symbol" style="background: linear-gradient(135deg, #ffb020, #ff7a45)"><svg viewBox="0 0 24 24"><rect x="2" y="15" width="20" height="6" rx="3"/><rect x="5" y="3" width="6" height="6" rx="1.8"/><rect x="13" y="3" width="6" height="6" rx="1.8"/></svg></div>
+      <h3>Your dock stays yours</h3>
+      <p>Keep the iPad’s own dock if you like. Apps only on the iPad are kept together on the last page.</p>
+    </div>
+  </section>
+
+  <h2>How it works</h2>
+  <section class="steps">
+    <div class="step glass"><h3>Connect your iPhone</h3><p>Plug it into your Mac. Mirrorboard reads its home screen and remembers it.</p></div>
+    <div class="step glass"><h3>Connect your iPad</h3><p>Unlock it and tap Trust if it asks. The preview appears straight away.</p></div>
+    <div class="step glass"><h3>Mirror</h3><p>Check the preview, click Mirror, and your iPad matches your iPhone.</p></div>
+  </section>
+
+  <h2>Questions</h2>
+  <section class="faq glass">
+    <details>
+      <summary>Is it safe for my iPad?</summary>
+      <p>Mirrorboard only rearranges icons on the home screen; it never deletes apps or data. It saves a backup of the layout before every change, and Undo restores it.</p>
+    </details>
+    <details>
+      <summary>What about apps that aren’t on my iPad?</summary>
+      <p>They’re skipped, and Mirrorboard lists them for you. Install any you want, then mirror again to put them in their folders.</p>
+    </details>
+    <details>
+      <summary>Does anything leave my Mac?</summary>
+      <p>No. Your devices talk to your Mac directly. The only time Mirrorboard goes online is to check your licence and look for updates.</p>
+    </details>
+    <details>
+      <summary>Do I need to jailbreak or install anything on my devices?</summary>
+      <p>No. Mirrorboard uses the same connection your Mac already uses for Finder sync.</p>
+    </details>
+    <details>
+      <summary>Can I use it on more than one Mac?</summary>
+      <p>Yes, one purchase works on up to three Macs. You can move it between them at any time.</p>
+    </details>
+    <details>
+      <summary>What do I need?</summary>
+      <p>A Mac with macOS 26 or later, and an iPhone and iPad on a recent version of iOS and iPadOS.</p>
+    </details>
+  </section>
+
+  <footer>
+    © 2026 Mirrorboard<br>
+    Mirrorboard is not affiliated with or endorsed by Apple. iPhone, iPad and macOS are trademarks of Apple Inc.
+  </footer>
+</main>
+<script>
+  // The button turns on by itself once the first release is published.
+  fetch("https://api.github.com/repos/alisiddiq/mirrorboard-releases/releases/latest")
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(release => {
+      const dmg = (release.assets || []).find(a => a.name.endsWith(".dmg"));
+      if (!dmg) return;
+      const button = document.getElementById("download");
+      button.href = dmg.browser_download_url;
+      button.textContent = "Download for Mac";
+      button.removeAttribute("aria-disabled");
+      document.getElementById("download-note").textContent =
+        `Version ${release.tag_name.replace(/^v/, "")} · Free to try · $4.99 to mirror · macOS 26 or later`;
+    })
+    .catch(() => {});
+</script>
+</body>
+</html>
