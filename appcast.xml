@@ -3,6 +3,15 @@
   <channel>
     <title>Mirrorboard</title>
     <item>
+      <title>Mirrorboard 1.0.5</title>
+      <pubDate>Tue, 03 Nov 2026 21:56:57 GMT</pubDate>
+      <sparkle:version>7</sparkle:version>
+      <sparkle:shortVersionString>1.0.5</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[If your iPad keeps some App Library apps on its home screen, Mirrorboard now finishes and tells you which ones, instead of reporting a failure.]]></description>
+      <enclosure url="https://github.com/alisiddiq/mirrorboard-releases/releases/download/v1.0.5/Mirrorboard.dmg" type="application/octet-stream" sparkle:edSignature="CsxBh1uDtjAfoSO4t/uQamfayuWK6U6HlcUVWqXkKu4m+k6s7C4mQ3fCsAQOiT/jsgeF78shyFt7voMV7GXzDw==" length="3712813"/>
+    </item>
+    <item>
       <title>Mirrorboard 1.0.4</title>
       <pubDate>Tue, 03 Nov 2026 21:45:51 GMT</pubDate>
       <sparkle:version>6</sparkle:version>
