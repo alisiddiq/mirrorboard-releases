@@ -3,6 +3,15 @@
   <channel>
     <title>Mirrorboard</title>
     <item>
+      <title>Mirrorboard 1.0.3</title>
+      <pubDate>Tue, 03 Nov 2026 21:32:38 GMT</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>1.0.3</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[Clearer help for connecting: the first time, plug both devices in with a cable, and if a device on Wi‑Fi goes missing, turn its Wi‑Fi off and on.]]></description>
+      <enclosure url="https://github.com/alisiddiq/mirrorboard-releases/releases/download/v1.0.3/Mirrorboard.dmg" type="application/octet-stream" sparkle:edSignature="7Bd6oUUBja85sPrdeplt3FsPG+RvJTx/WhMSawA52VhroMnM33bqkGzwi5rtHZnKKYhebABXeDvdLVJjQRkECg==" length="3704782"/>
+    </item>
+    <item>
       <title>Mirrorboard 1.0.2</title>
       <pubDate>Tue, 03 Nov 2026 21:20:01 GMT</pubDate>
       <sparkle:version>4</sparkle:version>
