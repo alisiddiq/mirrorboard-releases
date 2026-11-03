@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title>Mirrorboard</title>
+    <item>
+      <title>Mirrorboard 1.0</title>
+      <pubDate>Tue, 03 Nov 2026 15:49:59 GMT</pubDate>
+      <sparkle:version>2</sparkle:version>
+      <sparkle:shortVersionString>1.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[First release of Mirrorboard: give your iPad the same home screen as your iPhone.]]></description>
+      <enclosure url="https://github.com/alisiddiq/mirrorboard-releases/releases/download/v1.0/Mirrorboard.dmg" type="application/octet-stream" sparkle:edSignature="6vIzsgRGKnbqx5CXgmy9m6o+lY/0/9KNvNw00dHBgKNbDlhLSH6njj6st6wM/Qgh7dPI8cCOoWoDNxnDh9t3AA==" length="3663024"/>
+    </item>
+  </channel>
+</rss>
