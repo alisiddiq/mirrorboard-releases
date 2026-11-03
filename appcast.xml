@@ -3,6 +3,15 @@
   <channel>
     <title>Mirrorboard</title>
     <item>
+      <title>Mirrorboard 1.0.4</title>
+      <pubDate>Tue, 03 Nov 2026 21:45:51 GMT</pubDate>
+      <sparkle:version>6</sparkle:version>
+      <sparkle:shortVersionString>1.0.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[Clearer connection help: a cable works while your device is locked; over Wi‑Fi, keep it unlocked or charging.]]></description>
+      <enclosure url="https://github.com/alisiddiq/mirrorboard-releases/releases/download/v1.0.4/Mirrorboard.dmg" type="application/octet-stream" sparkle:edSignature="DExJ2AkBeb15G1hYnBUuS4D6YCUFsZf22oDJ5V1pdku7zOA0V7TQClgzVAFbk4SMnWW5dkQXDkWjsAEwhivQBw==" length="3704781"/>
+    </item>
+    <item>
       <title>Mirrorboard 1.0.3</title>
       <pubDate>Tue, 03 Nov 2026 21:32:38 GMT</pubDate>
       <sparkle:version>5</sparkle:version>
