@@ -3,6 +3,15 @@
   <channel>
     <title>Mirrorboard</title>
     <item>
+      <title>Mirrorboard 1.0.6</title>
+      <pubDate>Tue, 03 Nov 2026 22:03:48 GMT</pubDate>
+      <sparkle:version>8</sparkle:version>
+      <sparkle:shortVersionString>1.0.6</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[Mirroring finishes much faster: the final check stops as soon as your iPad is done.]]></description>
+      <enclosure url="https://github.com/alisiddiq/mirrorboard-releases/releases/download/v1.0.6/Mirrorboard.dmg" type="application/octet-stream" sparkle:edSignature="G7X6GORkq6kfXDIJdy8k9Hq3OhaD9OvZOSBFqNtltaheQz15u1pYKSNwzrbG9UkgSS3PSEHVHtHVC14kRra6Aw==" length="3711835"/>
+    </item>
+    <item>
       <title>Mirrorboard 1.0.5</title>
       <pubDate>Tue, 03 Nov 2026 21:56:57 GMT</pubDate>
       <sparkle:version>7</sparkle:version>
